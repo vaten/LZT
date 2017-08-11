@@ -48,6 +48,7 @@
         timeOutFunc();
     };
 
+    //日期格式化
     LZT.prototype.dateFormat = function(date, fmt) {
         var date = new Date(date);
         var o = {
@@ -63,6 +64,32 @@
         for (var k in o)
             if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
         return fmt;
+    }
+
+    //页面记录日志
+    LZT.prototype.pageLog = function(msg) {
+        if(!document.getElementById('log_block')) {
+            var div = document.createElement("div");
+            div.id="log_block";
+            div.style.position = "fixed";
+            div.style.top = "0px";
+            div.style.width = "50%";
+            div.style.height = "40%";
+            div.style.fontSize = "24px";
+            div.style.color = "rgb(255, 255, 255)";
+            div.style.zIndex = "9999999";
+            div.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
+            div.style.padding = "1% 2%";
+            div.style.webkitOverflowScrolling = "touch";
+            div.style.overflow = "auto";
+            div.ontouchmove = function(e) { e.stopPropagation(); }
+            document.body.appendChild(div);
+        }
+        var pt = document.createElement("p");
+        pt.innerHTML = msg;
+        var log_block = document.getElementById('log_block');
+        log_block.appendChild(pt);
+        log_block.scrollTop = log_block.lastElementChild.offsetTop;
     }
 
 
